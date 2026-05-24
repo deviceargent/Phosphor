@@ -2,7 +2,9 @@
 
 A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor monitors, Matrix, and Fallout terminals.
 
-![Theme preview showing JDownloader 2 with dark background and neon green accents]
+![Downloads tab](screenshots/downloads.png)
+![Settings panel](screenshots/settings.png)
+![Preview](screenshots/preview.png)
 
 ---
 
