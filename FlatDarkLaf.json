@@ -1,0 +1,54 @@
+{
+  "customtablerowheight": 24,
+  "textantialiasenabled": true,
+  "speedmeterantialiasingenabled": true,
+  "tablealternaterowhighlightenabled": false,
+  "windowdecorationenabled": true,
+
+  "colorforpanelbackground":                    "#ff0e0e0e",
+  "colorforpanelheaderbackground":              "#ff161616",
+  "colorforpanelheaderforeground":              "#ffe8e8e8",
+  "colorforpanelborders":                       "#ff2a2a2a",
+  "colorforconfigheadertextcolor":              "#ffe8e8e8",
+  "colorforconfigpaneldescriptiontext":         "#ff999999",
+  "configlabelenabledtextcolor":                "#ffe8e8e8",
+  "configlabeldisabledtextcolor":               "#ff555555",
+
+  "colorfortablepackagerowbackground":          "#ff161616",
+  "colorfortablepackagerowforeground":          "#ffe8e8e8",
+  "colorfortablealternaterowbackground":        "#ff1b1b1b",
+  "colorfortablealternaterowforeground":        "#ffe8e8e8",
+  "colorfortablerowgap":                        "#ff2a2a2a",
+  "colorfortablemouseoverrowbackground":        "#ff272727",
+  "colorfortablemouseoverrowforeground":        "#ffe8e8e8",
+  "colorfortableselectedrowsbackground":        "#ff0d2e18",
+  "colorfortableselectedrowsforeground":        "#ff39ff7a",
+  "colorfortablesortedcolumnview":              "#ffe8e8e8",
+  "colorfortablefilteredview":                  "#ff39ff7a",
+
+  "colorfortableaccounterrorrowbackground":     "#7fe05252",
+  "colorfortableaccounterrorrowforeground":     "#ffe8e8e8",
+  "colorfortableaccounttemperrorrowbackground": "#7ff0a030",
+  "colorfortableaccounttemperrorrowforeground": "#ffe8e8e8",
+  "colorforerrorforeground":                    "#ffe05252",
+  "colorforlinkgrabberdupehighlighter":         "#33e05252",
+
+  "colorforscrollbarsnormalstate":              "#ff313131",
+  "colorforscrollbarsmouseoverstate":           "#ff1a7a3a",
+
+  "colorforprogressbarforeground1":             "#5f39ff7a",
+  "colorforprogressbarforeground2":             "#7f39ff7a",
+  "colorforprogressbarforeground3":             "#9f39ff7a",
+  "colorforprogressbarforeground4":             "#bf39ff7a",
+  "colorforprogressbarforeground5":             "#ff39ff7a",
+
+  "colorforspeedmetercurrenttop":               "#2039ff7a",
+  "colorforspeedmetercurrentbottom":            "#cc39ff7a",
+  "colorforspeedmeteraverage":                  "#ff39ff7a",
+  "colorforspeedmeteraveragetext":              "#ffe8e8e8",
+  "colorforspeedmetertext":                     "#ffe8e8e8",
+  "colorforspeedmeterlimitertop":               "#cce05252",
+  "colorforspeedmeterlimiterbottom":            "#00e05252",
+
+  "colorfortooltipforeground":                  "#ffe8e8e8"
+}
