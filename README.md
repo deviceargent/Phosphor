@@ -12,40 +12,46 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 
 - Near-black backgrounds (`#0e0e0e`) with layered dark surfaces
 - Neon green (`#39ff7a`) accent on selected rows, progress bars, tabs, icons
-- Monochromatic green icon set
+- Monochromatic green icon set (250+ icons)
 - Full dark chrome — menus, toolbars, scrollbars, checkboxes, tooltips
 
 ---
 
 ## Files
 
-| File | Destination |
+| File | Description |
 |---|---|
-| `flatlaf.jar` | `JDownloader 2\libs\laf\` |
-| `FlatDarkLaf.json` | `JDownloader 2\cfg\laf\` (create folder if missing) |
-| `images\` (folder contents) | `JDownloader 2\themes\standard\org\jdownloader\images\` |
+| `FlatPhosphor.jar` | Main theme file — colors, icons and class bundled |
+| `FlatDarkLaf.json` | JD2-specific color overrides |
+| `images\` | Icon set (used for manual installation) |
+| `src\Phosphor.java` | Theme class source |
+| `src\Phosphor.properties` | FlatLaf color properties |
 
 ---
 
 ## Installation
-0. Go to Code ( Green button up here )  > Download Zip File
-1. Right click Jdownloader 2 shortcut on your desktop or start menu and open > Properties , then > Open File location
-2. Open the zip file you just downloaded
+
+0. Go to **Code** (green button above) → **Download ZIP**
+1. Right-click your JDownloader 2 shortcut → **Properties** → **Open File Location**
+2. Extract the ZIP you downloaded
 3. Close JDownloader 2 completely
-4. Copy `flatlaf.jar` to `JDownloader 2\libs\laf\` — replace the existing file
+4. Copy `FlatPhosphor.jar` to `JDownloader 2\libs\laf\`
 5. Create `JDownloader 2\cfg\laf\` if it doesn't exist, then copy `FlatDarkLaf.json` there
-6. Copy the contents of the `images\` folder to `JDownloader 2\themes\standard\org\jdownloader\images\` — replace when prompted
+6. Create `JDownloader 2\themes\phosphor\org\jdownloader\images\` and copy the contents of the `images\` folder there
 7. Open JDownloader 2
 8. Go to `Settings → Advanced Settings`
-9. Search for `LookAndFeelTheme`
-10. Set `GraphicalUserInterfaceSettings: Look And Feel Theme` to `FLATLAF_DARK`
+9. Search `customlookandfeelclass` → set value to `com.github.deviceargent.phosphor.Phosphor`
+10. Search `iconsetid` → set value to `phosphor`
 11. Restart JDownloader 2
 
 ### After a JDownloader update
 
-JDownloader may overwrite `flatlaf.jar` after an automatic update. If the theme reverts, simply copy `flatlaf.jar` back to `libs\laf\` and restart.
+JDownloader may overwrite files in `libs\laf\` after an automatic update. If the theme reverts:
+1. Copy `FlatPhosphor.jar` back to `libs\laf\`
+2. Verify `customlookandfeelclass` and `iconsetid` settings are still set
+3. Restart JDownloader 2
 
-It's a good idea to keep a backup of the three files somewhere easy to find.
+Keep a backup of the files somewhere easy to find.
 
 ---
 
@@ -55,21 +61,35 @@ It's a good idea to keep a backup of the three files somewhere easy to find.
 ```
 %LOCALAPPDATA%\JDownloader 2\libs\laf\
 %LOCALAPPDATA%\JDownloader 2\cfg\laf\
-%LOCALAPPDATA%\JDownloader 2\themes\standard\org\jdownloader\images\
+%LOCALAPPDATA%\JDownloader 2\themes\phosphor\org\jdownloader\images\
 ```
 
 **Linux:**
 ```
 ~/JDownloader2/libs/laf/
 ~/JDownloader2/cfg/laf/
-~/JDownloader2/themes/standard/org/jdownloader/images/
+~/JDownloader2/themes/phosphor/org/jdownloader/images/
 ```
 
 **macOS:**
 ```
 ~/Library/JDownloader 2/libs/laf/
 ~/Library/JDownloader 2/cfg/laf/
-~/Library/JDownloader 2/themes/standard/org/jdownloader/images/
+~/Library/JDownloader 2/themes/phosphor/org/jdownloader/images/
+```
+
+---
+
+## Building from source
+
+Requirements: JDK 8+, `flatlaf.jar` from your JDownloader 2 `libs\laf\` folder.
+
+```
+cd phosphor-build
+mkdir bin
+javac -cp "path\to\flatlaf.jar" -d bin src\com\github\deviceargent\phosphor\Phosphor.java
+copy src\com\github\deviceargent\phosphor\Phosphor.properties bin\com\github\deviceargent\phosphor\
+jar cvf FlatPhosphor.jar -C bin . -C . themes
 ```
 
 ---
@@ -86,8 +106,9 @@ Licensed under the [MIT License](https://opensource.org/licenses/MIT)
 https://github.com/moktavizen/material-darker-jdownloader  
 Icons recolored to neon green (#39ff7a) for this theme.
 
-**Theme colors and FlatDarkLaf.json** — Phosphor theme  
-Original work, free to use and redistribute.
+**Theme colors and Phosphor.properties** — Original work, free to use and redistribute.
+
+Special thanks to **jiaz** from the JDownloader team for guidance on the theming system.
 
 ---
 
@@ -95,22 +116,18 @@ Original work, free to use and redistribute.
 
 Phosphor is distributed under the [MIT License](https://opensource.org/licenses/MIT).
 
-The bundled `flatlaf.jar` retains its original Apache 2.0 license.  
-The icon set retains its original MIT license from moktavizen.
+`FlatPhosphor.jar` includes FlatLaf under Apache 2.0 and icons under MIT.
 
 ---
 
 ## Notes
 
-&ensp;
-
 👤 <ins>Author</ins>
 
-DeviceArgent 
+DeviceArgent
 
 ![ArgentinaFlorkGIF](https://github.com/user-attachments/assets/1564ac6d-7b0b-4c0b-8f82-5bd3a9b69edb)
 
-
 - The official JDownloader 2 logo icon intentionally retains its original orange/yellow color as a visual anchor and out of respect for the JDownloader project.
 - Tested on Windows 10/11. Should work on Linux and macOS with path adjustments.
-- If you use the theme on Linux via Flatpak or AUR builds of JDownloader, the `vmoptions` file may not be recognized — use the official installer from jdownloader.org instead.
+- Official integration as `FLATLAF_PHOSPHOR` in the JDownloader theme list is currently in progress with the JDownloader team.
