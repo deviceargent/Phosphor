@@ -40,8 +40,7 @@ jobs:
         run: |
           mkdir -p jartree/themes/phosphor/org/jdownloader/images
           mkdir -p jartree/cfg/laf
-          rsync -a --exclude 'banner/' --exclude 'botty/' --exclude 'fav/' \
-            --exclude 'flags/' --exclude 'logo/' --exclude '*.license' \
+          rsync -a --exclude '*.license' \
             images/ jartree/themes/phosphor/org/jdownloader/images/
           cp FlatDarkLaf.json jartree/cfg/laf/
 
