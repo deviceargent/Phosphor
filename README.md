@@ -22,10 +22,13 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 | File | Description |
 |---|---|
 | `FlatPhosphor.jar` | Main theme file — colors, icons and class bundled |
-| `FlatDarkLaf.json` | JD2-specific color overrides |
+| `Phosphor.json` | **Required** — per-LAF settings JD2 reads from `cfg\laf\`: icon set id (`phosphor`) + all GUI colors (panels, tables, progress bars, speed meter) |
+| `FlatDarkLaf.json` | Same colors for JD2's built-in Flat Dark LAF (optional, only if you use Flat Dark without the custom class) |
 | `images\` | Icon set (used for manual installation) |
 | `src\Phosphor.java` | Theme class source |
 | `src\Phosphor.properties` | FlatLaf color properties |
+
+> **Important:** `Phosphor.json` is what makes the theme actually look right. Without it, JDownloader loads the theme class but keeps default colors and no green icons.
 
 ---
 
@@ -36,7 +39,7 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 2. Extract the ZIP you downloaded
 3. Close JDownloader 2 completely
 4. Copy `FlatPhosphor.jar` to `JDownloader 2\libs\laf\`
-5. Create `JDownloader 2\cfg\laf\` if it doesn't exist, then copy `FlatDarkLaf.json` there
+5. Create `JDownloader 2\cfg\laf\` if it doesn't exist, then copy **both** `Phosphor.json` and `FlatDarkLaf.json` there
 6. Create `JDownloader 2\themes\phosphor\org\jdownloader\images\` and copy the contents of the `images\` folder there
 7. Open JDownloader 2
 8. Go to `Settings → Advanced Settings`
@@ -48,8 +51,9 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 
 JDownloader may overwrite files in `libs\laf\` after an automatic update. If the theme reverts:
 1. Copy `FlatPhosphor.jar` back to `libs\laf\`
-2. Verify `customlookandfeelclass` and `iconsetid` settings are still set
-3. Restart JDownloader 2
+2. Verify `cfg\laf\Phosphor.json` is still there (it survives updates, but check anyway)
+3. Verify `customlookandfeelclass` and `iconsetid` settings are still set
+4. Restart JDownloader 2
 
 Keep a backup of the files somewhere easy to find.
 
