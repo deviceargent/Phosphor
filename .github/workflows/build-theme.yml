@@ -1,0 +1,51 @@
+name: Build Phosphor theme jar
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/**'
+      - '.github/workflows/build-theme.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+
+      - name: Download flatlaf.jar (compile-time dependency)
+        run: |
+          curl -sSL -o flatlaf.jar \
+            https://repo1.maven.org/maven2/com/formdev/flatlaf/3.5.4/flatlaf-3.5.4.jar
+
+      - name: Compile Phosphor.java (package-correct source)
+        run: |
+          mkdir -p bin
+          javac -cp flatlaf.jar -d bin \
+            src/com/github/deviceargent/phosphor/Phosphor.java
+          cp src/com/github/deviceargent/phosphor/Phosphor.properties \
+            bin/com/github/deviceargent/phosphor/
+
+      - name: Assemble jar tree from repo layout
+        run: |
+          mkdir -p jartree/themes/phosphor/org/jdownloader/images
+          mkdir -p jartree/cfg/laf
+          cp -r images/* jartree/themes/phosphor/org/jdownloader/images/
+          cp FlatDarkLaf.json jartree/cfg/laf/
+
+      - name: Package FlatPhosphor.jar
+        run: |
+          jar cvf FlatPhosphor.jar -C bin . -C jartree .
+
+      - name: Upload jar as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlatPhosphor
+          path: FlatPhosphor.jar
