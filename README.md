@@ -57,6 +57,15 @@ JDownloader may overwrite files in `libs\laf\` after an automatic update. If the
 
 Keep a backup of the files somewhere easy to find.
 
+### Troubleshooting: theme loads but colors/icons are wrong
+
+If after restarting you get default gray/dark colors and no green icons, your `cfg\laf\*.json` files are missing or stale:
+
+1. Make sure `Phosphor.json` and `FlatDarkLaf.json` were copied into `JDownloader 2\cfg\laf\`
+2. If still wrong: open `Settings → User Interface → Look and Feel`, select **FlatLaf Dark** and apply — JDownloader will (re)generate its `FlatDarkLaf.json` with the base background palette
+3. Then set `customlookandfeelclass` back to `com.github.deviceargent.phosphor.Phosphor` and `iconsetid` back to `phosphor`
+4. Restart JDownloader 2
+
 ---
 
 ## Paths by OS
