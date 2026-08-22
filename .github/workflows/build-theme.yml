@@ -49,3 +49,12 @@ jobs:
         with:
           name: FlatPhosphor
           path: FlatPhosphor.jar
+
+      - name: Commit built jar back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          cp FlatPhosphor.jar FlatPhosphor.jar.new
+          mv FlatPhosphor.jar.new FlatPhosphor.jar
+          git add FlatPhosphor.jar
+          git diff --staged --quiet && echo "No changes" || (git commit -m "ci: rebuild FlatPhosphor.jar (package casing fix)" && git push)
