@@ -51,11 +51,15 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 
 ### After a JDownloader update
 
-JDownloader may overwrite files in `libs\laf\` after an automatic update. If the theme reverts:
+JDownloader may overwrite files in `libs\laf\` after an automatic update.
+
+**If the theme suddenly turns white or looks broken: restart JDownloader 2 once before touching anything.** A single restart usually restores the correct look by itself — an update can leave the UI half-applied, and the next start reloads the theme properly.
+
+If it *still* looks wrong after that restart:
 1. Copy `FlatPhosphor.jar` back to `libs\laf\`
 2. Verify `cfg\laf\Phosphor.json` is still there (it survives updates, but check anyway)
 3. Verify `customlookandfeelclass` and `iconsetid` settings are still set
-4. Restart JDownloader 2
+4. Restart JDownloader 2 again
 
 Keep a backup of the files somewhere easy to find.
 
