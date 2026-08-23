@@ -37,15 +37,17 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 0. Go to **Code** (green button above) → **Download ZIP**
 1. Right-click your JDownloader 2 shortcut → **Properties** → **Open File Location**
 2. Extract the ZIP you downloaded
-3. Close JDownloader 2 completely
-4. Copy `FlatPhosphor.jar` to `JDownloader 2\libs\laf\`
-5. Create `JDownloader 2\cfg\laf\` if it doesn't exist, then copy **both** `Phosphor.json` and `FlatDarkLaf.json` there
-6. Create `JDownloader 2\themes\phosphor\org\jdownloader\images\` and copy the contents of the `images\` folder there
-7. Open JDownloader 2
-8. Go to `Settings → Advanced Settings`
-9. Search `customlookandfeelclass` → set value to `com.github.deviceargent.phosphor.Phosphor`
-10. Search `iconsetid` → set value to `phosphor`
-11. Restart JDownloader 2
+3. Open JDownloader 2 → `Settings → User Interface → Look and Feel` → select **FlatLaf Dark** and wait a few seconds. **This step is required**: a fresh install does *not* ship `flatlaf.jar`, and this theme needs it — selecting FlatLaf Dark makes JDownloader download it automatically.
+4. Close JDownloader 2 completely
+5. Copy `FlatPhosphor.jar` to `JDownloader 2\libs\laf\`
+6. Create `JDownloader 2\cfg\laf\` if it doesn't exist, then copy **both** `Phosphor.json` and `FlatDarkLaf.json` there
+7. Create `JDownloader 2\themes\phosphor\org\jdownloader\images\` and copy the contents of the `images\` folder there
+8. Open JDownloader 2
+9. Go to `Settings → Advanced Settings`
+10. Search `customlookandfeelclass` → set value to `com.github.deviceargent.phosphor.Phosphor`
+    ⚠️ **After confirming, re-read the field**: this setting sometimes swallows the first typed/pasted character (`om.github…`). A truncated value silently disables the theme — it must start with `com.`
+11. Search `iconsetid` → it should already say `phosphor` (it comes inside `Phosphor.json`). If it says `standard`, set it to `phosphor`
+12. Restart JDownloader 2
 
 ### After a JDownloader update
 
@@ -57,14 +59,23 @@ JDownloader may overwrite files in `libs\laf\` after an automatic update. If the
 
 Keep a backup of the files somewhere easy to find.
 
-### Troubleshooting: theme loads but colors/icons are wrong
+### Troubleshooting
 
-If after restarting you get default gray/dark colors and no green icons, your `cfg\laf\*.json` files are missing or stale:
+**Symptom → cause → fix:**
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| Black background but gray title bar / window frame, icons stay standard | `customlookandfeelclass` is wrong or truncated (e.g. `om.github…` — missing first letter). JD silently stays on the previous LAF and only the color overrides apply | Re-enter `com.github.deviceargent.phosphor.Phosphor`, **verify it starts with `com.`**, restart |
+| Everything default gray, no green anywhere | `flatlaf.jar` was never installed, or `cfg\laf\*.json` files are missing/stale | Do Installation step 3 (FlatLaf Dark) so JDownloader downloads `flatlaf.jar`; make sure both JSONs are in `cfg\laf\` |
+
+If colors/icons are still wrong after that:
 
 1. Make sure `Phosphor.json` and `FlatDarkLaf.json` were copied into `JDownloader 2\cfg\laf\`
 2. If still wrong: open `Settings → User Interface → Look and Feel`, select **FlatLaf Dark** and apply — JDownloader will (re)generate its `FlatDarkLaf.json` with the base background palette
 3. Then set `customlookandfeelclass` back to `com.github.deviceargent.phosphor.Phosphor` and `iconsetid` back to `phosphor`
 4. Restart JDownloader 2
+
+Note: JDownloader only rewrites the `cfg\laf\<ActiveTheme>.json` of the *currently active* LAF. If your `Phosphor.json` keeps its original timestamp while the theme misbehaves, the Phosphor class isn't actually active yet — check `customlookandfeelclass`.
 
 ---
 
