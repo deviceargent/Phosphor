@@ -27,6 +27,7 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 | `images\` | Icon set (used for manual installation) |
 | `src\Phosphor.java` | Theme class source |
 | `src\Phosphor.properties` | FlatLaf color properties |
+| `Install-Phosphor.ps1` | Windows installer: copies the theme jar **and** patches JDownloader.jar so link progress bars turn green (see below) |
 
 > **Important:** `Phosphor.json` is what makes the theme actually look right. Without it, JDownloader loads the theme class but keeps default colors and no green icons.
 
@@ -49,6 +50,21 @@ A neon green terminal-style theme for JDownloader 2. Inspired by CRT phosphor mo
 11. Search `iconsetid` → it should already say `phosphor` (it comes inside `Phosphor.json`). If it says `standard`, set it to `phosphor`
 12. Restart JDownloader 2
 
+### Optional: green progress bars on download links
+
+Plain download-link rows (audio/subs/thumbnail inside a package) use progress bars whose color is **hardcoded by JDownloader**: `ExtProgressColumn.getDefaultForeground()` returns pure white or black for contrast against the row background, ignoring any Look &amp; Feel. On dark themes that always ends up white. Package rows, hover and selection follow theme colors normally.
+
+`Install-Phosphor.ps1` fixes this with a tiny bytecode patch (one method made to return `null`, so the bar inherits the theme foreground):
+
+```powershell
+# close JDownloader 2 first (tray included), then:
+.\Install-Phosphor.ps1 -ThemeJar .\FlatPhosphor.jar
+```
+
+It backs up `JDownloader.jar` before touching it, requires the patch site to match exactly once (fails safely otherwise), and is idempotent.
+
+**After every JDownloader auto-update, re-run the script** — updates replace `JDownloader.jar` and revert the patch.
+
 ### After a JDownloader update
 
 JDownloader may overwrite files in `libs\laf\` after an automatic update.
@@ -59,7 +75,8 @@ If it *still* looks wrong after that restart:
 1. Copy `FlatPhosphor.jar` back to `libs\laf\`
 2. Verify `cfg\laf\Phosphor.json` is still there (it survives updates, but check anyway)
 3. Verify `customlookandfeelclass` and `iconsetid` settings are still set
-4. Restart JDownloader 2 again
+4. Re-run `Install-Phosphor.ps1` (updates revert the progress-bar patch)
+5. Restart JDownloader 2 again
 
 Keep a backup of the files somewhere easy to find.
 
