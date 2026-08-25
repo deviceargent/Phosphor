@@ -7,7 +7,9 @@
 .DESCRIPTION
     1. Creates a timestamped backup of JDownloader.jar.
     2. Copies FlatPhosphor.jar into <JD>\libs\laf\
-    3. Patches ExtProgressColumn.class inside JDownloader.jar:
+    3. Patches Phosphor.json to fix white progress bars on package rows
+       (changes colorfortablepackagerowforeground from #ffe8e8e8 to #39ff7a)
+    4. Patches ExtProgressColumn.class inside JDownloader.jar:
        ExtProgressColumn.getDefaultForeground() hardcodes a black/white contrast
        color that ignores the LookAndFeel. The patch makes it return null so bars
        inherit the theme foreground.
@@ -15,7 +17,7 @@
          aload_0; invokevirtual getDefaultBackground; invokestatic getContrastBWColor; areturn
        -> replaced with: aconst_null; areturn (+ nops)
 
-    JDownloader auto-updates revert this patch: re-run the script after updates.
+    JDownloader auto-updates revert the JAR patch: re-run the script after updates.
 
 .PARAMETER ThemeJar
     Path to FlatPhosphor.jar. Defaults to .\FlatPhosphor.jar next to this script.
@@ -69,7 +71,26 @@ if (-not $SkipThemeCopy) {
     Write-Host "[ok] theme installed -> $lafDir\FlatPhosphor.jar"
 }
 
-# --- 3. patch JDownloader.jar ------------------------------------------------
+# --- 3. patch Phosphor.json: fix white progress bars on package rows --------
+$phosphorJson = Join-Path $JdDir "cfg\laf\Phosphor.json"
+if (Test-Path -LiteralPath $phosphorJson) {
+    try {
+        $json = Get-Content -LiteralPath $phosphorJson -Raw | ConvertFrom-Json
+        if ($json.colorfortablepackagerowforeground -ne "#39ff7a") {
+            $json.colorfortablepackagerowforeground = "#39ff7a"
+            $json | ConvertTo-Json -Depth 10 | Set-Content -LiteralPath $phosphorJson -Encoding UTF8
+            Write-Host "[ok] Phosphor.json: colorfortablepackagerowforeground -> #39ff7a (green progress bars)"
+        } else {
+            Write-Host "[ok] Phosphor.json: colorfortablepackagerowforeground already correct"
+        }
+    } catch {
+        Write-Warning "Could not patch Phosphor.json: $_"
+    }
+} else {
+    Write-Warning "Phosphor.json not found at: $phosphorJson"
+}
+
+# --- 4. patch JDownloader.jar ------------------------------------------------
 $entryName = "org/appwork/swing/exttable/columns/ExtProgressColumn.class"
 
 $zip = [System.IO.Compression.ZipFile]::Open($jarPath, "Update")
@@ -128,3 +149,5 @@ finally {
 Write-Host ""
 Write-Host "Done. Start JDownloader 2, then select:"
 Write-Host "  Settings > User Interface > Look and Feel > Phosphor"
+Write-Host ""
+Write-Host "If package-row progress bars are still white, restart JDownloader once more."

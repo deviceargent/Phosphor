@@ -55,6 +55,8 @@ Plain download-link rows (audio/subs/thumbnail inside a package) use progress ba
 
 `Install-Phosphor.ps1` fixes this with a tiny bytecode patch (one method made to return `null`, so the bar inherits the theme foreground):
 
+> **Note (v0.1.1):** `colorfortablepackagerowforeground` in `Phosphor.json` was changed from `#ffe8e8e8` to `#39ff7a`. This fixes white progress bars on package (mother) rows. The issue was caused by `RendererMigPanel.setForeground()` propagating the foreground color to all child components, including the progress bar. The old value (`#ffe8e8e8`) was a light gray that matched text contrast but overrode the green progress bar color.
+
 ```powershell
 # close JDownloader 2 first (tray included), then:
 .\Install-Phosphor.ps1 -ThemeJar .\FlatPhosphor.jar
@@ -87,13 +89,15 @@ Keep a backup of the files somewhere easy to find.
 |---|---|---|
 | Black background but gray title bar / window frame, icons stay standard | `customlookandfeelclass` is wrong or truncated (e.g. `om.github…` — missing first letter). JD silently stays on the previous LAF and only the color overrides apply | Re-enter `com.github.deviceargent.phosphor.Phosphor`, **verify it starts with `com.`**, restart |
 | Everything default gray, no green anywhere | `flatlaf.jar` was never installed, or `cfg\laf\*.json` files are missing/stale | Do Installation step 3 (FlatLaf Dark) so JDownloader downloads `flatlaf.jar`; make sure both JSONs are in `cfg\laf\` |
+| Progress bars on package rows are white | `colorfortablepackagerowforeground` in `Phosphor.json` is still `#ffe8e8e8` (old value). This causes `RendererMigPanel` to propagate white foreground to the progress bar | Run `Install-Phosphor.ps1` to auto-fix, or manually set `colorfortablepackagerowforeground` to `#39ff7a` in `Phosphor.json` |
 
 If colors/icons are still wrong after that:
 
 1. Make sure `Phosphor.json` and `FlatDarkLaf.json` were copied into `JDownloader 2\cfg\laf\`
 2. If still wrong: open `Settings → User Interface → Look and Feel`, select **FlatLaf Dark** and apply — JDownloader will (re)generate its `FlatDarkLaf.json` with the base background palette
 3. Then set `customlookandfeelclass` back to `com.github.deviceargent.phosphor.Phosphor` and `iconsetid` back to `phosphor`
-4. Restart JDownloader 2
+4. Re-run `Install-Phosphor.ps1` to re-apply the progress bar fixes
+5. Restart JDownloader 2
 
 Note: JDownloader only rewrites the `cfg\laf\<ActiveTheme>.json` of the *currently active* LAF. If your `Phosphor.json` keeps its original timestamp while the theme misbehaves, the Phosphor class isn't actually active yet — check `customlookandfeelclass`.
 
